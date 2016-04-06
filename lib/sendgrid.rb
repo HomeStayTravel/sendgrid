@@ -101,7 +101,7 @@ module SendGrid
 
   # Call within mailer method to set the template_id.
   def sendgrid_template_id(template_id)
-    @gs_template_id = template_id
+    @sg_template_id = template_id
   end
 
   # Call within mailer method to override the default value.
@@ -167,7 +167,7 @@ module SendGrid
     @ganalytics_options = []
     options.each { |option| @ganalytics_options << option if VALID_GANALYTICS_OPTIONS.include?(option[0].to_sym) }
   end
-  
+
   # only override the appropriate methods for the current ActionMailer version
   if ActionMailer::Base.respond_to?(:mail)
 
@@ -212,7 +212,7 @@ module SendGrid
 
     #if not called within the mailer method, this will be nil so we default to empty hash
     @sg_unique_args = @sg_unique_args || {}
-    
+
     # set the unique arguments
     if @sg_unique_args || self.class.default_sg_unique_args
       unique_args = self.class.default_sg_unique_args || {}
@@ -307,8 +307,8 @@ module SendGrid
           end
 
         when :templates
-          if @gs_template_id
-            filters[:templates]['settings']['template_id'] = @gs_template_id
+          if @sg_template_id
+            filters[:templates]['settings']['template_id'] = @sg_template_id
           end
       end
     end
